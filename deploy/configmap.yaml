@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minecraft-config
+  namespace: minecraft
+data:
+  EULA: "TRUE"
+  # MEMORY: 2G
+  # TYPE: FABRIC
+  # TYPE: "PAPER"
+  # PLUGINS: "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot\nhttps://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot"
+
+  ENABLE_RCON: "true"
+  RCON_PORT: "25575"
+  RCON_PASSWORD: "safsdaf"
+
+  ICON: "/servericon.png"
+  OVERRIDE_ICON: "true"
+
+  ALLOW_FLIGHT: "true"
+  MOTD: Vanilla+
+  # VIEW_DISTANCE: 10
+  # SIMULATION_DISTANCE: 10

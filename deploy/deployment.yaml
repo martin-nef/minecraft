@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+  namespace: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      volumes:
+        - name: secret-data
+          secret:
+            secretName: playit-secret
+            items:
+              - key: secret.toml
+                path: secret.toml
+        - name: server-icon
+          configMap:
+            name: server-icon
+            items:
+              - key: servericon.png
+                path: servericon.png
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:latest
+          envFrom:
+            - configMapRef:
+                name: minecraft-config
+          volumeMounts:
+            - name: server-icon
+              mountPath: /servericon.png
+              subPath: servericon.png
+              readOnly: true
+        - name: playit
+          image: ghcr.io/martin-nef/playit-gg:latest
+          volumeMounts:
+            - name: secret-data
+              mountPath: /secret.toml
+              subPath: secret.toml
+              readOnly: true
