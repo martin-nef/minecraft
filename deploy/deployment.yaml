@@ -16,12 +16,6 @@ spec:
         app: minecraft
     spec:
       volumes:
-        - name: secret-data
-          secret:
-            secretName: playit-secret
-            items:
-              - key: secret.toml
-                path: secret.toml
         - name: server-icon
           configMap:
             name: server-icon
@@ -38,11 +32,4 @@ spec:
             - name: server-icon
               mountPath: /servericon.png
               subPath: servericon.png
-              readOnly: true
-        - name: playit
-          image: ghcr.io/martin-nef/playit-gg:latest
-          volumeMounts:
-            - name: secret-data
-              mountPath: /secret.toml
-              subPath: secret.toml
               readOnly: true
