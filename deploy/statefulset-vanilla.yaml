@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft
+  namespace: minecraft
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - oci-big-1
+      volumes:
+        - name: server-icon
+          configMap:
+            name: server-icon
+            items:
+              - key: servericon.png
+                path: servericon.png
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:stable
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "1Gi"
+            limits:
+              memory: "1Gi"
+          envFrom:
+            - configMapRef:
+                name: minecraft-config
+          volumeMounts:
+            - name: server-icon
+              mountPath: /servericon.png
+              subPath: servericon.png
+              readOnly: true
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "local-path"
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  namespace: minecraft
+  labels:
+    app: minecraft
+spec:
+  ports:
+    - port: 25565
+      name: minecraft
+  clusterIP: None
+  selector:
+    app: minecraft
