@@ -1,7 +1,8 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: minecraft-config
+  name: vanilla-config
   namespace: minecraft
 data:
   EULA: "TRUE"
@@ -19,5 +20,28 @@ data:
 
   ALLOW_FLIGHT: "true"
   MOTD: Vanilla+
+  # VIEW_DISTANCE: 10
+  # SIMULATION_DISTANCE: 10
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: modded-config
+  namespace: minecraft
+data:
+  EULA: "TRUE"
+  MEMORY: 12G
+
+  MODPACK_PLATFORM: AUTO_CURSEFORGE
+  CF_API_KEY: ${CF_API_KEY}
+  CF_PAGE_URL: https://www.curseforge.com/minecraft/modpacks/ciscos-adventure-rpg-ultimate
+  MOTD: Cisco's Adventure RPG Ultimate
+  ICON: "/servericon.png"
+  OVERRIDE_ICON: "true"
+
+  ENABLE_RCON: "true"
+  RCON_PORT: "25575"
+  RCON_PASSWORD: "safsdaf"
+  ALLOW_FLIGHT: "true"
   # VIEW_DISTANCE: 10
   # SIMULATION_DISTANCE: 10

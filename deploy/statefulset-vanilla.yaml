@@ -41,7 +41,7 @@ spec:
               memory: "1Gi"
           envFrom:
             - configMapRef:
-                name: minecraft-config
+                name: vanilla-config
           volumeMounts:
             - name: server-icon
               mountPath: /servericon.png

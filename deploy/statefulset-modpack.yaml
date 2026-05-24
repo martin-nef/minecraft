@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft
+  namespace: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft-modded
+  template:
+    metadata:
+      labels:
+        app: minecraft-modded
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - oci-big-1
+      volumes:
+        - name: server-icon
+          configMap:
+            name: server-icon
+            items:
+              - key: servericon.png
+                path: servericon.png
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:stable
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "12Gi"
+            limits:
+              memory: "12Gi"
+          envFrom:
+            - configMapRef:
+                name: modded-config
+            - secretRef:
+                name: curseforge-secret
+          volumeMounts:
+            - name: server-icon
+              mountPath: /servericon.png
+              subPath: servericon.png
+              readOnly: true
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "local-path"
+        resources:
+          requests:
+            storage: 15Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: modded-service
+  namespace: minecraft
+  labels:
+    app: minecraft-modded
+spec:
+  ports:
+    - port: 25565
+      name: modded
+  clusterIP: None
+  selector:
+    app: minecraft-modded

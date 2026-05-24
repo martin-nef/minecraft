@@ -4,7 +4,8 @@ namespace: minecraft
 
 resources:
   - namespace.yaml
-  - configmap.yaml
+  - configmaps.yaml
+  - secrets.yaml
   - statefulset-vanilla.yaml
 
 generatorOptions:
