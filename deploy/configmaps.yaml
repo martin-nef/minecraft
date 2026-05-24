@@ -32,6 +32,7 @@ data:
   EULA: "TRUE"
   MEMORY: 12G
   SERVER_PORT: "25566"
+  JVM_OPTS: "-Dfml.readTimeout=300 -Dfml.loginTimeout=600"
 
   MODPACK_PLATFORM: AUTO_CURSEFORGE
   CF_API_KEY: ${CF_API_KEY}
@@ -46,3 +47,23 @@ data:
   ALLOW_FLIGHT: "true"
   # VIEW_DISTANCE: 10
   # SIMULATION_DISTANCE: 10
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: packetfixer-config
+  namespace: minecraft
+data:
+  packetfixer.properties: |
+    utfSize=32767
+    allSizesUnlimited=true
+    forceUnlimitedNbtEnabled=false
+    packetSize=104857600
+    stringSize=32767
+    timeout=300
+    varInt=5
+    varInt21=8
+    chunkPacketData=2097152
+    varLong=10
+    nbtMaxSize=209715200
+    decoderSize=838860800
