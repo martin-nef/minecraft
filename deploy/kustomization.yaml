@@ -8,6 +8,7 @@ resources:
   - secrets.yaml
   - statefulset-vanilla.yaml
   - statefulset-modded.yaml
+  - ingress-modded.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
