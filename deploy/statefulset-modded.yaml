@@ -32,7 +32,7 @@ spec:
                 path: servericon.png
       containers:
         - name: minecraft
-          image: itzg/minecraft-server:stable
+          image: itzg/minecraft-server:stable-java17
           imagePullPolicy: Always
           resources:
             requests:
