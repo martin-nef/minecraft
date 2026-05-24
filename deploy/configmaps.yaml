@@ -32,7 +32,7 @@ data:
   EULA: "TRUE"
   MEMORY: 12G
   SERVER_PORT: "25566"
-  JVM_OPTS: "-Dfml.readTimeout=300 -Dfml.loginTimeout=600"
+  JVM_OPTS: "-Dfml.readTimeout=300 -Dfml.loginTimeout=12000"
 
   MODPACK_PLATFORM: AUTO_CURSEFORGE
   CF_API_KEY: ${CF_API_KEY}
