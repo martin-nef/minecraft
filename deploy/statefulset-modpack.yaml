@@ -70,7 +70,7 @@ metadata:
     app: minecraft-modded
 spec:
   ports:
-    - port: 25565
+    - port: 25566
       name: modded
   clusterIP: None
   selector:
