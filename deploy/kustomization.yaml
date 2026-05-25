@@ -9,6 +9,7 @@ resources:
   - statefulset-vanilla.yaml
   - statefulset-modded.yaml
   - ingress-modded.yaml
+  - ingress-vanilla.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
