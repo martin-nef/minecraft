@@ -14,6 +14,7 @@ resources:
   - statefulset-velocity-vanilla.yaml
   - statefulset-velocity-modded.yaml
   - ingress-modded.yaml
+  - ingress-vanilla.yaml
   - ingress-velocity-vanilla.yaml
   - ingress-velocity-modded.yaml
 
