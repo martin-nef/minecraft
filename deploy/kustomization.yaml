@@ -10,7 +10,6 @@ resources:
   - statefulset-modded.yaml
   - configmap-velocity-vanilla.yaml
   - configmap-velocity-modded.yaml
-  - configmap-fastlogin.yaml
   - statefulset-velocity-vanilla.yaml
   - statefulset-velocity-modded.yaml
   - ingress-modded.yaml

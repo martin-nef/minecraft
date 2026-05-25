@@ -36,12 +36,6 @@ spec:
             items:
               - key: forwarding.secret
                 path: forwarding.secret
-        - name: fastlogin-config-src
-          configMap:
-            name: fastlogin-config
-            items:
-              - key: config.yml
-                path: config.yml
         - name: server-data
           emptyDir: {}
       initContainers:
@@ -52,10 +46,9 @@ spec:
             - -c
             - |
               set -e
-              mkdir -p /server/plugins/fastlogin
+              mkdir -p /server
               cp /etc/velocity-config/velocity.toml /server/velocity.toml
               cp /etc/forwarding-secret/forwarding.secret /server/forwarding.secret
-              cp /etc/fastlogin-config/config.yml /server/plugins/fastlogin/config.yml
               chown -R 1000:1000 /server
               chmod 0600 /server/forwarding.secret
           volumeMounts:
@@ -64,9 +57,6 @@ spec:
               readOnly: true
             - name: forwarding-secret-src
               mountPath: /etc/forwarding-secret
-              readOnly: true
-            - name: fastlogin-config-src
-              mountPath: /etc/fastlogin-config
               readOnly: true
             - name: server-data
               mountPath: /server
@@ -85,7 +75,9 @@ spec:
             - name: MEMORY
               value: "384M"
             - name: PLUGINS
-              value: "https://github.com/TuxCoding/FastLogin/releases/latest/download/FastLoginVelocity.jar"
+              value: |
+                https://github.com/Elytrium/LimboAPI/releases/download/1.1.26/limboapi-1.1.26.jar
+                https://github.com/Elytrium/LimboAuth/releases/download/1.1.14/limboauth-1.1.14.jar
           ports:
             - containerPort: 25577
               name: minecraft
