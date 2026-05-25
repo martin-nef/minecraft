@@ -36,6 +36,25 @@ spec:
             items:
               - key: paper-global.yml
                 path: paper-global.yml
+      initContainers:
+        - name: install-paper-global
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              mkdir -p /data/config
+              chown -R 1000:1000 /data/config
+              cp -f /etc/paper-config/paper-global.yml /data/config/paper-global.yml
+              chown 1000:1000 /data/config/paper-global.yml
+              chmod 0644 /data/config/paper-global.yml
+          volumeMounts:
+            - name: paper-global-config
+              mountPath: /etc/paper-config
+              readOnly: true
+            - name: data
+              mountPath: /data
       containers:
         - name: minecraft
           image: itzg/minecraft-server:stable
@@ -52,10 +71,6 @@ spec:
             - name: server-icon
               mountPath: /servericon.png
               subPath: servericon.png
-              readOnly: true
-            - name: paper-global-config
-              mountPath: /data/config/paper-global.yml
-              subPath: paper-global.yml
               readOnly: true
             - name: data
               mountPath: /data
