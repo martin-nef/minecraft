@@ -32,12 +32,6 @@ spec:
             items:
               - key: servericon.png
                 path: servericon.png
-        - name: packetfixer-config
-          configMap:
-            name: packetfixer-config
-            items:
-              - key: packetfixer.properties
-                path: packetfixer.properties
       containers:
         - name: minecraft
           image: itzg/minecraft-server:stable-java17
@@ -56,10 +50,6 @@ spec:
             - name: server-icon
               mountPath: /servericon.png
               subPath: servericon.png
-              readOnly: true
-            - name: packetfixer-config
-              mountPath: /data/config/packetfixer.properties
-              subPath: packetfixer.properties
               readOnly: true
             - name: data
               mountPath: /data
