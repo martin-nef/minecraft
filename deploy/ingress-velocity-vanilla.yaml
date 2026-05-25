@@ -5,7 +5,7 @@ metadata:
   namespace: minecraft
 spec:
   entryPoints:
-    - minecraft-velocity-vanilla
+    - mc-vel-vanilla
   routes:
     - match: HostSNI(`*`)
       services:
