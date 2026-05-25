@@ -5,7 +5,7 @@ metadata:
   name: minecraft-modded
   namespace: minecraft
 spec:
-  replicas: 0
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
