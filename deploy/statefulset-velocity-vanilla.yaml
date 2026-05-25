@@ -57,7 +57,7 @@ spec:
             - name: MEMORY
               value: "384M"
             - name: PLUGINS
-              value: "https://github.com/games647/FastLogin/releases/latest/download/FastLogin.velocity.jar"
+              value: "https://github.com/TuxCoding/FastLogin/releases/latest/download/FastLoginVelocity.jar"
           ports:
             - containerPort: 25577
               name: minecraft
