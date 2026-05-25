@@ -24,24 +24,52 @@ spec:
                     values:
                       - oci-big-1
       volumes:
-        - name: velocity-config
+        - name: velocity-config-src
           configMap:
             name: velocity-modded-config
             items:
               - key: velocity.toml
                 path: velocity.toml
-        - name: forwarding-secret
+        - name: forwarding-secret-src
           secret:
             secretName: velocity-forwarding-secret
             items:
               - key: forwarding.secret
                 path: forwarding.secret
-        - name: fastlogin-config
+        - name: fastlogin-config-src
           configMap:
             name: fastlogin-config
             items:
               - key: config.yml
                 path: config.yml
+        - name: server-data
+          emptyDir: {}
+      initContainers:
+        - name: install-configs
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              mkdir -p /server/plugins/fastlogin
+              cp /etc/velocity-config/velocity.toml /server/velocity.toml
+              cp /etc/forwarding-secret/forwarding.secret /server/forwarding.secret
+              cp /etc/fastlogin-config/config.yml /server/plugins/fastlogin/config.yml
+              chown -R 1000:1000 /server
+              chmod 0600 /server/forwarding.secret
+          volumeMounts:
+            - name: velocity-config-src
+              mountPath: /etc/velocity-config
+              readOnly: true
+            - name: forwarding-secret-src
+              mountPath: /etc/forwarding-secret
+              readOnly: true
+            - name: fastlogin-config-src
+              mountPath: /etc/fastlogin-config
+              readOnly: true
+            - name: server-data
+              mountPath: /server
       containers:
         - name: velocity
           image: itzg/mc-proxy:latest
@@ -62,18 +90,8 @@ spec:
             - containerPort: 25577
               name: minecraft
           volumeMounts:
-            - name: velocity-config
-              mountPath: /server/velocity.toml
-              subPath: velocity.toml
-              readOnly: true
-            - name: forwarding-secret
-              mountPath: /server/forwarding.secret
-              subPath: forwarding.secret
-              readOnly: true
-            - name: fastlogin-config
-              mountPath: /server/plugins/fastlogin/config.yml
-              subPath: config.yml
-              readOnly: true
+            - name: server-data
+              mountPath: /server
 ---
 apiVersion: v1
 kind: Service
