@@ -6,9 +6,16 @@ resources:
   - namespace.yaml
   - configmaps.yaml
   - secrets.yaml
+  - secrets-velocity.yaml
   - statefulset-vanilla.yaml
   - statefulset-modded.yaml
+  - configmap-velocity-vanilla.yaml
+  - configmap-velocity-modded.yaml
+  - statefulset-velocity-vanilla.yaml
+  - statefulset-velocity-modded.yaml
   - ingress-modded.yaml
+  - ingress-velocity-vanilla.yaml
+  - ingress-velocity-modded.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: velocity-modded
+  namespace: minecraft
+spec:
+  entryPoints:
+    - minecraft-velocity-modded
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: velocity-modded-service
+          port: 25577

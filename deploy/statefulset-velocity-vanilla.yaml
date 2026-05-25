@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: velocity-vanilla
+  namespace: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: velocity-vanilla
+  template:
+    metadata:
+      labels:
+        app: velocity-vanilla
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - oci-big-1
+      volumes:
+        - name: velocity-config
+          configMap:
+            name: velocity-vanilla-config
+            items:
+              - key: velocity.toml
+                path: velocity.toml
+        - name: forwarding-secret
+          secret:
+            secretName: velocity-forwarding-secret
+            items:
+              - key: forwarding.secret
+                path: forwarding.secret
+      containers:
+        - name: velocity
+          image: itzg/mc-proxy:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+          env:
+            - name: TYPE
+              value: "VELOCITY"
+            - name: MEMORY
+              value: "384M"
+            - name: PLUGINS
+              value: "https://github.com/games647/FastLogin/releases/latest/download/FastLogin.velocity.jar"
+          ports:
+            - containerPort: 25577
+              name: minecraft
+          volumeMounts:
+            - name: velocity-config
+              mountPath: /server/velocity.toml
+              subPath: velocity.toml
+              readOnly: true
+            - name: forwarding-secret
+              mountPath: /server/forwarding.secret
+              subPath: forwarding.secret
+              readOnly: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: velocity-vanilla-service
+  namespace: minecraft
+  labels:
+    app: velocity-vanilla
+spec:
+  ports:
+    - port: 25577
+      name: minecraft
+  clusterIP: None
+  selector:
+    app: velocity-vanilla
