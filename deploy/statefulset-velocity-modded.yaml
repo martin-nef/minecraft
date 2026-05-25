@@ -72,6 +72,8 @@ spec:
           env:
             - name: TYPE
               value: "VELOCITY"
+            - name: VELOCITY_VERSION
+              value: "3.3.0-SNAPSHOT"
             - name: MEMORY
               value: "384M"
             - name: PLUGINS
