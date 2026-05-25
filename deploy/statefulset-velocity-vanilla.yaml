@@ -72,14 +72,8 @@ spec:
           env:
             - name: TYPE
               value: "VELOCITY"
-            - name: VELOCITY_VERSION
-              value: "3.3.0-SNAPSHOT"
             - name: MEMORY
               value: "384M"
-            - name: PLUGINS
-              value: |
-                https://github.com/Elytrium/LimboAPI/releases/download/1.1.26/limboapi-1.1.26.jar
-                https://github.com/Elytrium/LimboAuth/releases/download/1.1.14/limboauth-1.1.14.jar
           ports:
             - containerPort: 25577
               name: minecraft
