@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastlogin-config
+  namespace: minecraft
+data:
+  config.yml: |
+    # FastLogin (Velocity) — shared config for vanilla + modded proxies.
+    # Behavior: premium usernames must auth via Mojang; non-premium usernames
+    # are allowed through as cracked (offline UUID derived from the username).
+
+    autoRegister: true
+    autoLogin: true
+    forwardSkin: true
+    nameChangeCheck: false
+    nonPremiumUuid: CRACKED
+    allowFloodgateNamePrefix: ALLOW
+
+    premiumUuidSource:
+      - mojang
+
+    mojangRequestQueue:
+      ratelimit: 600
+      delay: 10000
+
+    secrets: {}

@@ -36,6 +36,12 @@ spec:
             items:
               - key: forwarding.secret
                 path: forwarding.secret
+        - name: fastlogin-config
+          configMap:
+            name: fastlogin-config
+            items:
+              - key: config.yml
+                path: config.yml
       containers:
         - name: velocity
           image: itzg/mc-proxy:latest
@@ -63,6 +69,10 @@ spec:
             - name: forwarding-secret
               mountPath: /server/forwarding.secret
               subPath: forwarding.secret
+              readOnly: true
+            - name: fastlogin-config
+              mountPath: /server/plugins/fastlogin/config.yml
+              subPath: config.yml
               readOnly: true
 ---
 apiVersion: v1
