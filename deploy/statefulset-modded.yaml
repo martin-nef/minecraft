@@ -5,7 +5,7 @@ metadata:
   name: minecraft-modded
   namespace: minecraft
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: minecraft-modded
@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: minecraft-modded
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-05-25T3"
     spec:
       affinity:
         nodeAffinity:
