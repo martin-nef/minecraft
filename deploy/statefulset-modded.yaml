@@ -6,6 +6,10 @@ metadata:
   namespace: minecraft
 spec:
   replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: minecraft-modded
