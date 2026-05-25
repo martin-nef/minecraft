@@ -6,7 +6,6 @@ resources:
   - namespace.yaml
   - configmaps.yaml
   - secrets.yaml
-  - secrets-velocity.yaml
   - statefulset-vanilla.yaml
   - statefulset-modded.yaml
   - configmap-velocity-vanilla.yaml

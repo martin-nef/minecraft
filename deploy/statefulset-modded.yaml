@@ -36,6 +36,12 @@ spec:
             items:
               - key: packetfixer.properties
                 path: packetfixer.properties
+        - name: forge-proxy-config
+          secret:
+            secretName: velocity-forwarding-secret
+            items:
+              - key: proxycompatibleforge.toml
+                path: proxycompatibleforge.toml
       containers:
         - name: minecraft
           image: itzg/minecraft-server:stable-java17
@@ -58,6 +64,10 @@ spec:
             - name: packetfixer-config
               mountPath: /data/config/packetfixer.properties
               subPath: packetfixer.properties
+              readOnly: true
+            - name: forge-proxy-config
+              mountPath: /data/config/proxycompatibleforge.toml
+              subPath: proxycompatibleforge.toml
               readOnly: true
             - name: data
               mountPath: /data

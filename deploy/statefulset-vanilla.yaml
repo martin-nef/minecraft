@@ -30,6 +30,12 @@ spec:
             items:
               - key: servericon.png
                 path: servericon.png
+        - name: paper-global-config
+          secret:
+            secretName: velocity-forwarding-secret
+            items:
+              - key: paper-global.yml
+                path: paper-global.yml
       containers:
         - name: minecraft
           image: itzg/minecraft-server:stable
@@ -46,6 +52,10 @@ spec:
             - name: server-icon
               mountPath: /servericon.png
               subPath: servericon.png
+              readOnly: true
+            - name: paper-global-config
+              mountPath: /data/config/paper-global.yml
+              subPath: paper-global.yml
               readOnly: true
             - name: data
               mountPath: /data
