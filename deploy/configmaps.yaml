@@ -53,6 +53,9 @@ data:
   # the modpack's copy. NOT a subPath over /data/config (blocks the CurseForge
   # installer, "Device or resource busy", cf. packetfixer) and NOT APPLY_EXTRA_FILES
   # (which throws FileAlreadyExistsException when the modpack already ships the file).
+  # Default skips files newer in the destination; force our /config to win so the
+  # override survives a fresh modpack re-extract.
+  SYNC_SKIP_NEWER_IN_DESTINATION: "false"
 ---
 apiVersion: v1
 kind: ConfigMap
