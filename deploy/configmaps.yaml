@@ -64,17 +64,16 @@ data:
   #   minContribution=1.0   -> no diminishing returns for repeated/aging foods
   #   queueSize=1000         -> max window ("unlimited"); range is 1..1000
   #   endDecay=1000          -> must match queueSize per the config's own warning
+  # A directory PATCH_DEFINITIONS expects each file to be a single patch
+  # definition ({file, ops}); the {"patches": [...]} wrapper is only for a
+  # standalone patch-set file.
   solapplepie.json: |
     {
-      "patches": [
-        {
-          "file": "/data/config/solapplepie-server.toml",
-          "ops": [
-            { "$set": { "path": "$.Advanced.minContribution", "value": 1.0 } },
-            { "$set": { "path": "$.Advanced.endDecay", "value": 1000 } },
-            { "$set": { "path": "$.Miscellaneous.queueSize", "value": 1000 } }
-          ]
-        }
+      "file": "/data/config/solapplepie-server.toml",
+      "ops": [
+        { "$set": { "path": "$.Advanced.minContribution", "value": 1.0 } },
+        { "$set": { "path": "$.Advanced.endDecay", "value": 1000 } },
+        { "$set": { "path": "$.Miscellaneous.queueSize", "value": 1000 } }
       ]
     }
 ---
