@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openssl rand *)",
+      "Bash(mkdir *)",
+      "Bash(kubectl -n minecraft get sts)",
+      "Bash(kubectl -n minecraft get pods)",
+      "Bash(kubectl -n minecraft get *)",
+      "Bash(kubectl -n minecraft logs *)",
+      "Bash(kubectl -n minecraft exec minecraft-0 -- cat *)",
+      "Bash(kubectl -n minecraft exec minecraft-0 -- grep *)",
+      "Bash(kubectl -n minecraft exec minecraft-modded-0 -- cat *)",
+      "Bash(kubectl -n minecraft exec minecraft-modded-0 -- grep *)",
+      "Bash(kubectl -n minecraft exec minecraft-modded-0 -- sh)",
+      "Bash(kubectl -n minecraft exec minecraft-modded-0 -- stat *)",
+      "WebFetch(domain:docker-minecraft-server.readthedocs.io)"
+    ]
+  }
+}
