@@ -47,6 +47,36 @@ data:
   ALLOW_FLIGHT: "true"
   # VIEW_DISTANCE: 10
   # SIMULATION_DISTANCE: 10
+
+  # Apply mod-config patches at startup (itzg PATCH_DEFINITIONS). Points at a
+  # mounted dir, not /data/config, so it does not collide with the CurseForge
+  # installer extracting modpack overrides (cf. packetfixer "Device or resource busy").
+  PATCH_DEFINITIONS: "/patches"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solapplepie-patch
+  namespace: minecraft
+data:
+  # Spice of Life: Apple Pie (food diversity). Patched in place after the modpack
+  # is extracted, so the mod still reads/rewrites the file normally.
+  #   minContribution=1.0   -> no diminishing returns for repeated/aging foods
+  #   queueSize=1000         -> max window ("unlimited"); range is 1..1000
+  #   endDecay=1000          -> must match queueSize per the config's own warning
+  solapplepie.json: |
+    {
+      "patches": [
+        {
+          "file": "/data/config/solapplepie-server.toml",
+          "ops": [
+            { "$set": { "path": "$.Advanced.minContribution", "value": 1.0 } },
+            { "$set": { "path": "$.Advanced.endDecay", "value": 1000 } },
+            { "$set": { "path": "$.Miscellaneous.queueSize", "value": 1000 } }
+          ]
+        }
+      ]
+    }
 ---
 apiVersion: v1
 kind: ConfigMap

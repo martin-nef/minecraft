@@ -36,6 +36,12 @@ spec:
             items:
               - key: servericon.png
                 path: servericon.png
+        - name: solapplepie-patch
+          configMap:
+            name: solapplepie-patch
+            items:
+              - key: solapplepie.json
+                path: solapplepie.json
       containers:
         - name: minecraft
           image: itzg/minecraft-server:stable-java17
@@ -54,6 +60,9 @@ spec:
             - name: server-icon
               mountPath: /servericon.png
               subPath: servericon.png
+              readOnly: true
+            - name: solapplepie-patch
+              mountPath: /patches
               readOnly: true
             - name: data
               mountPath: /data
