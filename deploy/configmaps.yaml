@@ -48,11 +48,11 @@ data:
   # VIEW_DISTANCE: 10
   # SIMULATION_DISTANCE: 10
 
-  # Copy our full mod config over the modpack's at startup. Source is a separate
-  # /extra mount (never a subPath over /data/config, which blocks the CurseForge
-  # installer with "Device or resource busy", cf. packetfixer). Destination is
-  # relative to /data. Runs after the modpack is extracted, so it overrides it.
-  APPLY_EXTRA_FILES: "config/solapplepie-server.toml</extra/solapplepie-server.toml"
+  # Mod-config override: files mounted at /config are copied into /data/config
+  # at startup ("Copying any configs from /config to /data/config"), overwriting
+  # the modpack's copy. NOT a subPath over /data/config (blocks the CurseForge
+  # installer, "Device or resource busy", cf. packetfixer) and NOT APPLY_EXTRA_FILES
+  # (which throws FileAlreadyExistsException when the modpack already ships the file).
 ---
 apiVersion: v1
 kind: ConfigMap

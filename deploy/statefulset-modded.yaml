@@ -62,7 +62,7 @@ spec:
               subPath: servericon.png
               readOnly: true
             - name: solapplepie-config
-              mountPath: /extra
+              mountPath: /config
               readOnly: true
             - name: data
               mountPath: /data
