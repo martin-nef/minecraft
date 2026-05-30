@@ -18,3 +18,6 @@ configMapGenerator:
   - name: server-icon
     files:
       - servericon.png
+  - name: solapplepie-config
+    files:
+      - solapplepie-server.toml=config/solapplepie-server.toml
