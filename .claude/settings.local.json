@@ -3,6 +3,12 @@
     "allow": [
       "Bash(openssl rand *)",
       "Bash(mkdir *)",
+      "Bash(tr *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(grep *)",
+      "Bash(sort *)",
+      "Bash(sed *)",
       "Bash(kubectl -n minecraft get sts)",
       "Bash(kubectl -n minecraft get pods)",
       "Bash(kubectl -n minecraft get *)",
