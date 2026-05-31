@@ -41,6 +41,7 @@ spec:
           resources:
             requests:
               memory: "14Gi"
+              cpu: "2000m"
             limits:
               memory: "14Gi"
           envFrom:
