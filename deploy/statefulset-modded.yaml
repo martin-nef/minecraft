@@ -48,9 +48,9 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "13Gi"
+              memory: "14Gi"
             limits:
-              memory: "13Gi"
+              memory: "14Gi"
           envFrom:
             - configMapRef:
                 name: modded-config
