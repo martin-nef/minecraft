@@ -4,10 +4,10 @@ namespace: minecraft
 
 resources:
   - namespace.yaml
-  - configmaps.yaml
   - secrets.yaml
   - statefulset-vanilla.yaml
   - statefulset-modded.yaml
+  - statefulset-eminence.yaml
   - ingress-modded.yaml
   - ingress-vanilla.yaml
 
