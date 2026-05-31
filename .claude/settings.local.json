@@ -19,7 +19,12 @@
       "Bash(kubectl -n minecraft exec minecraft-modded-0 -- grep *)",
       "Bash(kubectl -n minecraft exec minecraft-modded-0 -- sh)",
       "Bash(kubectl -n minecraft exec minecraft-modded-0 -- stat *)",
-      "WebFetch(domain:docker-minecraft-server.readthedocs.io)"
+      "WebFetch(domain:docker-minecraft-server.readthedocs.io)",
+      "Bash(nslookup minecraft2.nefcloud.top)",
+      "Bash(nslookup minecraft-modded.nefcloud.top)",
+      "Bash(nslookup -type=SRV _minecraft._tcp.minecraft2.nefcloud.top)",
+      "Bash(nslookup -type=SRV _minecraft._tcp.minecraft-modded.nefcloud.top)",
+      "Bash(nslookup gateway.nefcloud.top)"
     ]
   }
 }
