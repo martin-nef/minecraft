@@ -83,7 +83,7 @@ spec:
               memory: "12Gi"
               cpu: "2000m"
             limits:
-              memory: "12Gi"
+              memory: "16Gi"
           envFrom:
             - configMapRef:
                 name: atm-config
