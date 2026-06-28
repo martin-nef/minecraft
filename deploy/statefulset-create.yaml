@@ -40,7 +40,7 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "12Gi"
+              memory: "10Gi"
               cpu: "2000m"
             limits:
               memory: "12Gi"
@@ -88,7 +88,7 @@ metadata:
   namespace: minecraft
 data:
   EULA: "TRUE"
-  MEMORY: 10G
+  MEMORY: 8G
   SERVER_PORT: "25568"
   JVM_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dfml.readTimeout=300 -Dfml.loginTimeout=12000"
 
