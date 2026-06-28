@@ -1,0 +1,107 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft-create
+  namespace: minecraft
+spec:
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: minecraft-create
+  template:
+    metadata:
+      labels:
+        app: minecraft-create
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - shitbox
+      volumes:
+        - name: server-icon
+          configMap:
+            name: server-icon
+            items:
+              - key: servericon.png
+                path: servericon.png
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:java21
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "12Gi"
+              cpu: "2000m"
+            limits:
+              memory: "12Gi"
+          envFrom:
+            - configMapRef:
+                name: create-config
+            - secretRef:
+                name: curseforge-secret
+          volumeMounts:
+            - name: server-icon
+              mountPath: /servericon.png
+              subPath: servericon.png
+              readOnly: true
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "local-path"
+        resources:
+          requests:
+            storage: 20Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: create-service
+  namespace: minecraft
+  labels:
+    app: minecraft-create
+spec:
+  ports:
+    - port: 25568
+      name: create
+  clusterIP: None
+  selector:
+    app: minecraft-create
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: create-config
+  namespace: minecraft
+data:
+  EULA: "TRUE"
+  MEMORY: 10G
+  SERVER_PORT: "25568"
+  JVM_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dfml.readTimeout=300 -Dfml.loginTimeout=12000"
+
+  MODPACK_PLATFORM: AUTO_CURSEFORGE
+  CF_API_KEY: ${CF_API_KEY}
+  CF_PAGE_URL: https://www.curseforge.com/minecraft/modpacks/all-of-create-aeronautics
+  MOTD: "All of Create: Aeronautics"
+  ICON: "/servericon.png"
+  OVERRIDE_ICON: "true"
+
+  ENABLE_RCON: "true"
+  RCON_PORT: "25575"
+  RCON_PASSWORD: "safsdaf"
+  ALLOW_FLIGHT: "true"
+  # VIEW_DISTANCE: 10
+  # SIMULATION_DISTANCE: 10

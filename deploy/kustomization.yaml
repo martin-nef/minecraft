@@ -8,9 +8,11 @@ resources:
   - statefulset-vanilla.yaml
   - statefulset-rpg.yaml
   - statefulset-atm.yaml
+  - statefulset-create.yaml
   - ingress-rpg.yaml
   - ingress-vanilla.yaml
   - ingress-atm.yaml
+  - ingress-create.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
