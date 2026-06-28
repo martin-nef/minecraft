@@ -7,8 +7,10 @@ resources:
   - secrets.yaml
   - statefulset-vanilla.yaml
   - statefulset-rpg.yaml
+  - statefulset-atm.yaml
   - ingress-rpg.yaml
   - ingress-vanilla.yaml
+  - ingress-atm.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
