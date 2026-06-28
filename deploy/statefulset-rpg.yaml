@@ -40,10 +40,10 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "14Gi"
+              memory: "8Gi"
               cpu: "2000m"
             limits:
-              memory: "14Gi"
+              memory: "16Gi"
           envFrom:
             - configMapRef:
                 name: rpg-config
