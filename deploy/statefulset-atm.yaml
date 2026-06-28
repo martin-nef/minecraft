@@ -34,6 +34,46 @@ spec:
             items:
               - key: servericon.png
                 path: servericon.png
+        - name: cf-downloads
+          emptyDir: {}
+      initContainers:
+        # ATM10 bundles "unofficial cc:tweaked", whose author disallows automated
+        # CurseForge downloads, which aborts the modpack install. The same build is
+        # published on Modrinth with an open CDN, so stage it into the itzg
+        # CF_DOWNLOADS_REPO (/downloads/mods). We fetch every neoforge build for the
+        # target MC version, so whichever filename the pack pins is already present
+        # after a pack update — no manual re-download needed.
+        - name: stage-cc-tweaked
+          image: python:3.12-alpine
+          command: ["python3", "-c"]
+          args:
+            - |
+              import json, os, urllib.request
+              from urllib.parse import urlencode
+              MC = os.environ.get("CC_MC_VERSION", "1.21.1")
+              LOADER = os.environ.get("CC_LOADER", "neoforge")
+              DEST = "/downloads/mods"
+              UA = "minecraft-atm-init/1.0 (martin.nefjodov@gmail.com)"
+              os.makedirs(DEST, exist_ok=True)
+              q = urlencode({"loaders": '["%s"]' % LOADER, "game_versions": '["%s"]' % MC})
+              api = "https://api.modrinth.com/v2/project/cc-tweaked/version?" + q
+              req = urllib.request.Request(api, headers={"User-Agent": UA})
+              versions = json.load(urllib.request.urlopen(req, timeout=30))
+              n = 0
+              for v in versions:
+                  for f in v["files"]:
+                      path = os.path.join(DEST, f["filename"])
+                      if os.path.exists(path):
+                          continue
+                      print("downloading", f["filename"], flush=True)
+                      r = urllib.request.Request(f["url"], headers={"User-Agent": UA})
+                      with urllib.request.urlopen(r, timeout=180) as resp, open(path, "wb") as out:
+                          out.write(resp.read())
+                      n += 1
+              print("cc-tweaked: staged %d file(s) for %s %s" % (n, LOADER, MC), flush=True)
+          volumeMounts:
+            - name: cf-downloads
+              mountPath: /downloads
       containers:
         - name: minecraft
           image: itzg/minecraft-server:java21
@@ -56,6 +96,8 @@ spec:
               readOnly: true
             - name: data
               mountPath: /data
+            - name: cf-downloads
+              mountPath: /downloads
   volumeClaimTemplates:
     - metadata:
         name: data
