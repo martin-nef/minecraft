@@ -46,7 +46,7 @@ spec:
               memory: "14Gi"
           envFrom:
             - configMapRef:
-                name: eminence-config
+                name: rpg-config
             - secretRef:
                 name: curseforge-secret
           volumeMounts:
@@ -69,14 +69,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: eminence-service
+  name: rpg-service
   namespace: minecraft
   labels:
     app: minecraft-eminence
 spec:
   ports:
     - port: 25566
-      name: eminence
+      name: rpg
   clusterIP: None
   selector:
     app: minecraft-eminence
@@ -84,7 +84,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: eminence-config
+  name: rpg-config
   namespace: minecraft
 data:
   EULA: "TRUE"

@@ -6,9 +6,8 @@ resources:
   - namespace.yaml
   - secrets.yaml
   - statefulset-vanilla.yaml
-  - statefulset-modded.yaml
-  - statefulset-eminence.yaml
-  - ingress-modded.yaml
+  - statefulset-rpg.yaml
+  - ingress-rpg.yaml
   - ingress-vanilla.yaml
 
 generatorOptions:
@@ -18,6 +17,3 @@ configMapGenerator:
   - name: server-icon
     files:
       - servericon.png
-  - name: solapplepie-config
-    files:
-      - solapplepie-server.toml=config/solapplepie-server.toml

@@ -1,13 +1,13 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: minecraft-modded
+  name: minecraft-rpg
   namespace: minecraft
 spec:
   entryPoints:
-    - minecraft-modded
+    - minecraft-rpg
   routes:
     - match: HostSNI(`*`)
       services:
-        - name: eminence-service
+        - name: rpg-service
           port: 25566
