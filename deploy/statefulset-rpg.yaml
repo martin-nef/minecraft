@@ -5,7 +5,7 @@ metadata:
   name: minecraft-eminence
   namespace: minecraft
 spec:
-  replicas: 1
+  replicas: 0
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
