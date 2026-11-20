@@ -23,6 +23,15 @@ spec:
                     operator: In
                     values:
                       - oci-big-1
+      # itzg's image starts as root only to chown /data and drop to 1000; run
+      # as 1000 from the start (the data is already 1000's) with no way to gain
+      # privileges back. No fsGroup: local-path volumes ignore it.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: server-icon
           configMap:
@@ -34,6 +43,10 @@ spec:
         - name: minecraft
           image: itzg/minecraft-server:stable
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           resources:
             requests:
               memory: "1Gi"
